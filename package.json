@@ -1,0 +1,53 @@
+{
+  "name": "requirejs.deps",
+  "description": "Generate and visualise requirejs dependencies.",
+  "version": "0.0.1",
+  "homepage": "",
+  "author": {
+    "name": "Tomasz Drwiega",
+    "email": "tomusdrw@blacksoft.eu",
+    "url": "http://blacksoft.eu"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "bugs": {
+    "url": ""
+  },
+  "licences": [
+    {
+      "type": "MIT",
+      "url": "http://opensource.org/licenses/MIT"
+    }
+  ],
+  "main": "Gruntfile.js",
+  "readmeFilename": "readme.md",
+  "engines": {
+    "node": ">=0.8.0"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "dependencies": {
+    "promised-io": "0.3.3",
+    "esprima": "~1.0.2",
+    "commander": "~1.1.1",
+    "requirejs": "~2.1.5",
+    "underscore": "~1.4.4"
+  },
+  "devDependencies": {
+    "mocha": "~1.8.1",
+    "chai": "1.4.2",
+    "grunt": "0.4.x",
+    "grunt-complexity": "0.1.x",
+    "grunt-simple-mocha": "0.3.x",
+    "grunt-contrib-jshint": "0.1.x"
+  },
+  "keywords": [
+    "gruntplugin",
+    "sync",
+    "synchronize",
+    "copy"
+  ]
+}

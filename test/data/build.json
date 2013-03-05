@@ -1,0 +1,14 @@
+{
+  "baseUrl": ".",
+  "keepBuildDir" : true,
+  "appDir": "./",
+  "dir": "../bin",
+  "mainConfigFile": "./require.config.js",
+  "optimize": "none",
+  "modules": [{
+    "name": "js/main"
+  }],
+  "paths": {
+    "+IgnoreMe": "empty:"
+  }
+}
