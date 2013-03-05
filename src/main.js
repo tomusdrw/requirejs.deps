@@ -9,6 +9,7 @@ program.version('0.0.1')
 .usage('[options]')
 .option('-c, --config [config]', 'r.js config file [./build.js]', './build.js')
 .option('-f, --from [module]', 'Single module as start point')
+.option('-w, --why [module]', 'Tells all paths from [from_module] to given module')
 .option('-o, --output', 'Return format output (d3, yuml, raw) [yuml]', 'yuml')
 .parse(process.argv);
 
@@ -71,6 +72,10 @@ require('./require.libs')(function(libs) {
   var moduleDeps = modules.map(function(module) {
     return findDeps(module.name);
   });
+
+  if (program.why) {
+    moduleDeps = require('./filter')(moduleDeps, program.why);
+  }
 
 
   // return json format for d3 visualisation
