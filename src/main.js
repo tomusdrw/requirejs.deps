@@ -1,12 +1,31 @@
 var program = require('commander');
 var path = require('path');
 var fs = require('fs');
+var _ = require('underscore');
 
 var requirejs = require('requirejs');
 
-program.version('0.0.1').usage('[options]').option('-c, --config [config]', 'r.js config file [./build.js]', './build.js').parse(process.argv);
+program.version('0.0.1')
+.usage('[options]')
+.option('-c, --config [config]', 'r.js config file [./build.js]', './build.js')
+.option('-f, --from [module]', 'Single module as start point')
+.option('-o, --output', 'Return format output (d3, yuml, raw) [yuml]', 'yuml')
+.parse(process.argv);
 
+var classify = function(name) {
+    var classes = ['@CommonBundle', '@AppBundle', '@CkdbBundle', '+', '#'];
+    var retClazz = 'unknown';
 
+    _.every(classes, function(clazz) {
+      if(name.indexOf(clazz) !== -1) {
+        retClazz = clazz;
+        return false;
+      }
+      return true;
+    });
+
+    return retClazz;
+  };
 
 var depsFinder = function(buildContext, parse) {
     var nameToUrl = buildContext.nameToUrl.bind(buildContext);
@@ -22,6 +41,7 @@ var depsFinder = function(buildContext, parse) {
       if(src === 'empty:.js') {
         return {
           name: moduleName,
+          clazz: classify(moduleName),
           deps: []
         };
       }
@@ -31,6 +51,7 @@ var depsFinder = function(buildContext, parse) {
 
       return {
         name: moduleName,
+        clazz: classify(moduleName),
         deps: deps.map(findDependencies)
       };
     };
@@ -44,12 +65,20 @@ require('./require.libs')(function(libs) {
 
   var findDeps = depsFinder(buildContext, libs.parse);
 
-  var modules = rConfig.modules;
+  var modules = (program.from) ? [{
+    name: program.from
+  }] : rConfig.modules;
   var moduleDeps = modules.map(function(module) {
     return findDeps(module.name);
   });
 
 
   // return json format for d3 visualisation
-  console.log(JSON.stringify(require('./report/d3')(moduleDeps)));
+  if (program.output === 'd3') {
+    console.log(JSON.stringify(require('./report/d3')(moduleDeps), null, 2));
+  } if (program.output === 'yuml') {
+    require('./report/yuml')(moduleDeps);
+  } else {
+    console.log(JSON.stringify(moduleDeps, null, 2));
+  }
 });

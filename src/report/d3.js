@@ -1,28 +1,5 @@
 var _ = require('underscore');
-
-var moduleToName = function(module) {
-    return module.name;
-  };
-
-var flatten = function(moduleDeps) {
-    var flattened = {};
-
-    var queue = moduleDeps;
-    var module = queue.pop();
-    while(module) {
-      if(!flattened[module.name]) {
-        flattened[module.name] = {
-          name: module.name,
-          deps: module.deps.map(moduleToName)
-        };
-
-        queue.push.apply(queue, module.deps);
-      }
-      module = queue.pop();
-    }
-
-    return flattened;
-  };
+var flatten = require('./flatten');
 
 module.exports = function(modulesDeps) {
   //first we need to flatten the data
@@ -32,9 +9,7 @@ module.exports = function(modulesDeps) {
   var nodes = _.values(flattened).map(function(module, idx) {
     //update flattened object with indices
     flattened[module.name].idx = idx;
-    return {
-      name: module.name
-    };
+    return module;
   });
 
   var links = [];
