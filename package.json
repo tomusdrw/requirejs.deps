@@ -21,7 +21,11 @@
       "url": "http://opensource.org/licenses/MIT"
     }
   ],
-  "main": "src/main.js",
+  "main" : "./src/deps.js",
+  "bin" : {
+    "rdeps" : "./src/main.js"
+  },
+  "preferGlobal" : true,
   "readmeFilename": "readme.md",
   "engines": {
     "node": ">=0.8.0"
@@ -30,7 +34,6 @@
     "test": "mocha"
   },
   "dependencies": {
-    "promised-io": "0.3.3",
     "esprima": "~1.0.2",
     "commander": "~1.1.1",
     "requirejs": "~2.1.5",
@@ -45,9 +48,10 @@
     "grunt-contrib-jshint": "0.1.x"
   },
   "keywords": [
-    "gruntplugin",
-    "sync",
-    "synchronize",
-    "copy"
+    "requirejs",
+    "amd",
+    "dependencies",
+    "deps",
+    "r.js"
   ]
 }
