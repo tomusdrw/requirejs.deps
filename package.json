@@ -2,7 +2,7 @@
   "name": "requirejs.deps",
   "description": "Generate and visualise requirejs dependencies.",
   "version": "0.0.1",
-  "homepage": "",
+  "homepage": "https://github.com/tomusdrw/requirejs.deps",
   "author": {
     "name": "Tomasz Drwiega",
     "email": "tomusdrw@blacksoft.eu",
@@ -10,10 +10,10 @@
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "git@github.com:tomusdrw/requirejs.deps.git"
   },
   "bugs": {
-    "url": ""
+    "url": "https://github.com/tomusdrw/requirejs.deps/issues"
   },
   "licences": [
     {
