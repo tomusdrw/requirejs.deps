@@ -9,7 +9,7 @@ var printer = function(moduleToId) {
         if (module) {
           return moduleToId[module.name];
         }
-        return '!circular!';
+        return 'circular';
       }).join(' -> ') + ';');
     };
   };
@@ -36,8 +36,11 @@ module.exports = function(moduleDeps) {
   //now print everything!
   var printArray = printer(moduleToId);
 
-  _.each(moduleDeps, function(module) {
-    printDeep(printArray, module, []);
+  //we need to do shallow printing!
+  utils.visit(moduleDeps, function(module) {
+    _.each(module.deps, function(dep){
+      printArray([module, dep]);
+    });
   });
 
 
