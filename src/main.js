@@ -10,7 +10,7 @@ program.version('0.0.1')
 .option('-c, --config [config]', 'r.js config file [./build.js]', './build.js')
 .option('-f, --from [module]', 'Single module as start point')
 .option('-w, --why [module]', 'Tells all paths from [from_module] to given module')
-.option('-o, --output', 'Return format output (d3, yuml, raw) [yuml]', 'yuml')
+.option('-o, --output [format]', 'Return format output (d3, yuml, line, raw) [yuml]', 'yuml')
 .parse(process.argv);
 
 var classify = function(name) {
@@ -77,12 +77,14 @@ require('./require.libs')(function(libs) {
     moduleDeps = require('./filter')(moduleDeps, program.why);
   }
 
-
   // return json format for d3 visualisation
+  console.log(program.output );
   if (program.output === 'd3') {
     console.log(JSON.stringify(require('./report/d3')(moduleDeps), null, 2));
-  } if (program.output === 'yuml') {
+  } else if (program.output === 'yuml') {
     require('./report/yuml')(moduleDeps);
+  } else if (program.output === 'line') {
+    require('./report/line')(moduleDeps);
   } else {
     console.log(JSON.stringify(moduleDeps, null, 2));
   }
