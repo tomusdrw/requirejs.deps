@@ -6,7 +6,10 @@ var _ = require('underscore');
 var printer = function(moduleToId) {
     return function(array) {
       console.log(array.map(function(module) {
-        return moduleToId[module.name];
+        if (module) {
+          return moduleToId[module.name];
+        }
+        return '!circular!';
       }).join(' -> ') + ';');
     };
   };

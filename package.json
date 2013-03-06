@@ -21,7 +21,7 @@
       "url": "http://opensource.org/licenses/MIT"
     }
   ],
-  "main": "Gruntfile.js",
+  "main": "src/main.js",
   "readmeFilename": "readme.md",
   "engines": {
     "node": ">=0.8.0"
