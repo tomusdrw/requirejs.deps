@@ -1,0 +1,11 @@
+digraph DepsVisualisation {
+node1[label="js/main"];
+node2[label="@SomePath2"];
+node3[label="lib1"];
+node4[label="+IgnoreMe"];
+
+node1 -> node3;
+node1 -> node4;
+node1 -> node2;
+node2 -> node3;
+}

@@ -1,0 +1,4 @@
+[js/main]->[lib1]
+[js/main]->[+IgnoreMe]
+[js/main]->[@SomePath2]
+[@SomePath2]->[lib1]
