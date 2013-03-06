@@ -1,5 +1,5 @@
 var _ = require('underscore');
-var flatten = require('./flatten');
+var flatten = require('./utils').flatten;
 
 module.exports = function(moduleDeps) {
   //first we need to flatten the data
