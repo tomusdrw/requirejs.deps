@@ -1,9 +1,14 @@
 var _ = require('underscore');
 
-var findConnection = function findConnection(module, why) {
+var findConnection = function findConnection(visited, module, why) {
+    if(visited[module.name]) {
+      return module.marked;
+    }
+    visited[module.name] = true;
+
     var markModule = false;
     _.each(module.deps, function(deps) {
-      if(deps.name === why || findConnection(deps, why)) {
+      if(deps.name === why || findConnection(visited, deps, why)) {
         deps.marked = true;
         markModule = true;
       }
@@ -12,11 +17,16 @@ var findConnection = function findConnection(module, why) {
     return markModule;
   };
 
-var filter = function filter(module) {
+var filter = function filter(visited, module) {
     if(module.marked) {
+      if(visited[module.name]) {
+        return module;
+      }
+
+      visited[module.name] = true;
       var deps = [];
       _.each(module.deps, function(dep) {
-        var filtered = filter(dep);
+        var filtered = filter(visited, dep);
         if(filtered) {
           deps.push(filtered);
         }
@@ -34,13 +44,13 @@ var filter = function filter(module) {
 module.exports = function(moduleDeps, why) {
   // mark modues that should stay
   _.each(moduleDeps, function(module) {
-    findConnection(module, why);
+    findConnection({}, module, why);
   });
 
   // filter not marked modules
   var ret = [];
   _.each(moduleDeps, function(module) {
-    var filtered = filter(module);
+    var filtered = filter({}, module);
     if(filtered) {
       ret.push(filtered);
     }
